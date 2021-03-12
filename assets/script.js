@@ -62,9 +62,10 @@ function startTimer(){
 //Obtaining questions from the questions inventory
 function getQuestion(){
   removeEls(start);
+  resetAnswers();
   questionsBox.innerHTML = "<p>" + questions[currentQuestion].question + "</p>";
   for (var i = 0; i < questions[currentQuestion].answers.length; i++){
-    console.log(questions[currentQuestion].answers[i])
+    // console.log(questions[currentQuestion].answers[i])
     var button = document.createElement("button")
     button.dataset.index = i;
     button.innerText = questions[currentQuestion].answers[i];
@@ -85,21 +86,20 @@ function checkAnswer(e) {
    if (questions[currentQuestion].correctAnswer == selectedAnswerIdx){
      console.log("correct")
      score += secondsLeft;
-     //increment score
    } else {
     score -= 10;
     secondsLeft = secondsLeft - 10;
     console.log("incorrect")
-     //take time off
    }
-   //advance to next question
-   if (currentQuestion === questions.length) {
-     return;
-   } else{
-     currentQuestion++;
-     getQuestion();
-   }
+   currentQuestion++;
+   getQuestion();
+   
 }
+function resetAnswers(){
+  while (choices.firstChild) {
+    choices.removeChild(choices.firstChild);
+  };
+};
 
 const removeEls = (...els) => {
     for (let el of els) el.remove();
