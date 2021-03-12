@@ -9,6 +9,7 @@ var questionsBox = document.getElementById("question-div")
 var secondsLeft = 60;
 var currentQuestion = 0;
 var setTime = secondsLeft;
+var score = 0
 
 const questions = [ 
   {
@@ -18,7 +19,7 @@ const questions = [
       "b: Sheryl Sandberg",
       "c: Brendan Eich"
     ],
-    correctAnswer: "c"
+    correctAnswer: 2
   },
   {
     question: "Which one of these is a JavaScript package manager?",
@@ -27,7 +28,7 @@ const questions = [
       "b: TypeScript",
       "c: npm"
     ],
-    correctAnswer: "c"
+    correctAnswer: 2
   },
   {
     question: "Which tool can you use to ensure code quality?",
@@ -37,7 +38,7 @@ const questions = [
       "c: RequireJS",
       "d: ESLint"
     ],
-    correctAnswer: "d"
+    correctAnswer: 3
   },    
 ];
 
@@ -61,11 +62,14 @@ function startTimer(){
 //Obtaining questions from the questions inventory
 function getQuestion(){
   removeEls(start);
-  
   questionsBox.innerHTML = "<p>" + questions[currentQuestion].question + "</p>";
   for (var i = 0; i < questions[currentQuestion].answers.length; i++){
     console.log(questions[currentQuestion].answers[i])
-    choices.innerHTML += "<button>" + questions[currentQuestion].answers[i] + "</button>";
+    var button = document.createElement("button")
+    button.dataset.index = i;
+    button.innerText = questions[currentQuestion].answers[i];
+    button.addEventListener("click", checkAnswer);
+    choices.append(button);
   };
 };
 
@@ -73,6 +77,29 @@ function sendMessage() {
   timer.textContent = "time's up!";
   };
 setTime;
+
+function checkAnswer(e) {
+   console.log(e.target.dataset.index);
+   var selectedAnswerIdx = e.target.dataset.index
+   console.log(typeof selectedAnswerIdx);
+   if (questions[currentQuestion].correctAnswer == selectedAnswerIdx){
+     console.log("correct")
+     score += secondsLeft;
+     //increment score
+   } else {
+    score -= 10;
+    secondsLeft = secondsLeft - 10;
+    console.log("incorrect")
+     //take time off
+   }
+   //advance to next question
+   if (currentQuestion === questions.length) {
+     return;
+   } else{
+     currentQuestion++;
+     getQuestion();
+   }
+}
 
 const removeEls = (...els) => {
     for (let el of els) el.remove();
