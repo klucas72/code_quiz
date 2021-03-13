@@ -69,7 +69,6 @@ function getQuestion(){
   resetAnswers();
   for (var i = 0; i < questions.length; i++){
     questionsBox.innerHTML = "<p>" + questions[currentQuestion].question + "</p>";
-    // console.log(questions[currentQuestion].answers[i])
     var button = document.createElement("button")
     button.dataset.index = i;
     button.innerText = questions[currentQuestion].answers[i];
