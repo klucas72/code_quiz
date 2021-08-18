@@ -67,7 +67,7 @@ function startTimer(){
 function getQuestion(){
   removeEls(start);
   resetAnswers();
-  for (var i = 0; i < questions.length; i++){
+  for (var i = 0; i < questions.length; i){
     questionsBox.innerHTML = "<p>" + questions[currentQuestion].question + "</p>";
     var button = document.createElement("button")
     button.dataset.index = i;
